@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Max Trader — Guia Completo de Opções Binárias</title>
+
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '377977982652336');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=377977982652336&ev=PageView&noscript=1"/>
+  </noscript>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --red: #E8000D;
+      --red-dark: #a30009;
+      --black: #0a0a0a;
+      --black2: #111111;
+      --white: #f5f5f5;
+      --grey: #1a1a1a;
+      --grey2: #252525;
+      --muted: #888;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 24px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,0,13,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--red), transparent);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+      animation: fadeDown 0.6s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(52px, 12vw, 110px);
+      line-height: 0.92;
+      letter-spacing: 2px;
+      animation: fadeDown 0.7s ease 0.1s both;
+    }
+
+    .hero-title span {
+      color: var(--red);
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 3vw, 22px);
+      font-weight: 500;
+      color: #bbb;
+      max-width: 560px;
+      margin: 24px auto 0;
+      line-height: 1.5;
+      animation: fadeDown 0.7s ease 0.2s both;
+    }
+
+    .price-block {
+      margin: 40px auto 0;
+      animation: fadeDown 0.7s ease 0.3s both;
+    }
+
+    .price-label {
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 72px;
+      line-height: 1;
+      color: var(--white);
+    }
+
+    .price sup {
+      font-size: 32px;
+      vertical-align: super;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      margin-top: 36px;
+      background: var(--red);
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 3px;
+      padding: 18px 52px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 40px rgba(232,0,13,0.35);
+      animation: fadeDown 0.7s ease 0.4s both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+    }
+
+    .cta-btn:hover {
+      background: var(--red-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 0 60px rgba(232,0,13,0.5);
+    }
+
+    .guarantee {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      animation: fadeDown 0.7s ease 0.5s both;
+    }
+
+    /* TICKER */
+    .ticker-wrap {
+      background: var(--red);
+      overflow: hidden;
+      padding: 10px 0;
+      white-space: nowrap;
+    }
+
+    .ticker {
+      display: inline-flex;
+      animation: ticker 20s linear infinite;
+    }
+
+    .ticker span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 3px;
+      padding: 0 32px;
+      color: #fff;
+    }
+
+    /* WHAT YOU GET */
+    .section {
+      padding: 80px 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1;
+      margin-bottom: 48px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+    }
+
+    .feature {
+      background: var(--grey);
+      padding: 32px 28px;
+      border-left: 3px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .feature:hover {
+      border-color: var(--red);
+      background: var(--grey2);
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .feature-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 15px;
+      color: #999;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    /* FOR WHO */
+    .forwho {
+      background: var(--grey);
+      padding: 80px 24px;
+    }
+
+    .forwho-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .checks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .check-item::before {
+      content: '▶';
+      color: var(--red);
+      font-size: 12px;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--grey2), transparent);
+      margin: 0 24px;
+    }
+
+    /* CTA BOTTOM */
+    .cta-bottom {
+      padding: 80px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-bottom::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(232,0,13,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-bottom .hero-title {
+      font-size: clamp(40px, 8vw, 80px);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #000;
+      padding: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: #444;
+      letter-spacing: 1px;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* MOBILE */
+    @media (max-width: 480px) {
+      .hero { padding: 80px 20px 48px; }
+      .cta-btn { padding: 16px 36px; font-size: 22px; }
+      .price { font-size: 56px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge">Guia Completo · Edição 2025</div>
+    <h1 class="hero-title">
+      MAX TRADER
+      <span>OTC</span>
+    </h1>
+    <p class="hero-sub">O guia que te ensina a operar opções binárias OTC no M1 com método, disciplina e consistência.</p>
+
+    <div class="price-block">
+      <p class="price-label">Acesso imediato por apenas</p>
+      <div class="price"><sup>€</sup>9<sup>,90</sup></div>
+    </div>
+
+    <a class="cta-btn" href="https://maxtrader6.gumroad.com/l/qwapem" onclick="fbq('track', 'InitiateCheckout');">
+      QUERO O EBOOK AGORA
+    </a>
+    <p class="guarantee">✓ Download imediato &nbsp;·&nbsp; Pagamento seguro</p>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span>OPÇÕES BINÁRIAS OTC</span>
+      <span>·</span>
+      <span>MÉTODO M1</span>
+      <span>·</span>
+      <span>POCKET OPTION</span>
+      <span>·</span>
+      <span>PRICE ACTION</span>
+      <span>·</span>
+      <span>GESTÃO DE RISCO</span>
+      <span>·</span>
+      <span>PSICOLOGIA DE TRADING</span>
+      <span>·</span>
+      <span>OPÇÕES BINÁRIAS OTC</span>
+      <span>·</span>
+      <span>MÉTODO M1</span>
+      <span>·</span>
+      <span>POCKET OPTION</span>
+      <span>·</span>
+      <span>PRICE ACTION</span>
+      <span>·</span>
+      <span>GESTÃO DE RISCO</span>
+      <span>·</span>
+      <span>PSICOLOGIA DE TRADING</span>
+      <span>·</span>
+    </div>
+  </div>
+
+  <!-- WHAT YOU GET -->
+  <section class="section">
+    <p class="section-label">O que vais aprender</p>
+    <h2 class="section-title">TUDO O QUE PRECISAS<br>PARA COMEÇAR</h2>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Price Action no M1</div>
+        <div class="feature-desc">Leitura de velas e estrutura de mercado no timeframe de 1 minuto para entradas precisas.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">Entradas de Alta Precisão</div>
+        <div class="feature-desc">Identifica os melhores momentos para entrar no mercado OTC com confiança.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">Gestão de Risco</div>
+        <div class="feature-desc">Protege o teu capital com regras claras de gestão de banca e controlo de perdas.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🧠</div>
+        <div class="feature-title">Psicologia de Trading</div>
+        <div class="feature-desc">Controla as emoções e opera com disciplina mesmo em sequências de perdas.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📱</div>
+        <div class="feature-title">Pocket Option na Prática</div>
+        <div class="feature-desc">Guia completo da plataforma, configuração ideal e como operar o mercado OTC.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📈</div>
+        <div class="feature-title">Médias Móveis e Indicadores</div>
+        <div class="feature-desc">Os indicadores certos para confirmar entradas e filtrar sinais falsos.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FOR WHO -->
+  <div class="forwho">
+    <div class="forwho-inner">
+      <p class="section-label">Para quem é</p>
+      <h2 class="section-title">ESTE EBOOK É PARA TI SE...</h2>
+      <div class="checks">
+        <div class="check-item">Queres começar em opções binárias mas não sabes por onde começar</div>
+        <div class="check-item">Já tentaste mas perdes dinheiro sem perceber porquê</div>
+        <div class="check-item">Queres um método testado no mercado OTC M1</div>
+        <div class="check-item">Procuras consistência e não apenas sorte</div>
+        <div class="check-item">Queres aprender gestão de risco a sério</div>
+        <div class="check-item">Estás disposto a estudar e aplicar o que aprendes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA BOTTOM -->
+  <section class="cta-bottom">
+    <p class="section-label">Acesso imediato</p>
+    <h2 class="hero-title">PRONTO PARA<br><span>EVOLUIR?</span></h2>
+    <br><br>
+    <a class="cta-btn" href="https://maxtrader6.gumroad.com/l/qwapem" onclick="fbq('track', 'InitiateCheckout');">
+      COMPRAR POR €9,90
+    </a>
+    <p class="guarantee" style="margin-top:20px;">✓ Download imediato após pagamento</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 Max Trader · Todos os direitos reservados<br>
+    <span style="color:#333">O trading envolve risco. Os resultados passados não garantem resultados futuros.</span>
+  </footer>
+
+</body>
+</html>
