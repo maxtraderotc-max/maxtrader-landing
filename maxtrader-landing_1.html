@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Max Trader — Grupo Gratuito de Trading OTC</title>
+
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '377977982652336');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=377977982652336&ev=PageView&noscript=1"/>
+  </noscript>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --red: #E8000D;
+      --red-dark: #a30009;
+      --black: #0a0a0a;
+      --black2: #111111;
+      --white: #f5f5f5;
+      --grey: #1a1a1a;
+      --grey2: #252525;
+      --muted: #888;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 24px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,0,13,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--red), transparent);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+      animation: fadeDown 0.6s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(52px, 12vw, 110px);
+      line-height: 0.92;
+      letter-spacing: 2px;
+      animation: fadeDown 0.7s ease 0.1s both;
+    }
+
+    .hero-title span {
+      color: var(--red);
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 3vw, 22px);
+      font-weight: 500;
+      color: #bbb;
+      max-width: 560px;
+      margin: 24px auto 0;
+      line-height: 1.5;
+      animation: fadeDown 0.7s ease 0.2s both;
+    }
+
+    .members-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--grey);
+      border: 1px solid var(--grey2);
+      border-radius: 40px;
+      padding: 10px 24px;
+      margin-top: 32px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #ccc;
+      animation: fadeDown 0.7s ease 0.3s both;
+    }
+
+    .members-badge .dot {
+      width: 8px;
+      height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #22c55e;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 36px;
+      background: var(--red);
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 3px;
+      padding: 18px 52px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 40px rgba(232,0,13,0.35);
+      animation: fadeDown 0.7s ease 0.4s both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+    }
+
+    .cta-btn:hover {
+      background: var(--red-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 0 60px rgba(232,0,13,0.5);
+    }
+
+    .guarantee {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      animation: fadeDown 0.7s ease 0.5s both;
+    }
+
+    .ticker-wrap {
+      background: var(--red);
+      overflow: hidden;
+      padding: 10px 0;
+      white-space: nowrap;
+    }
+
+    .ticker {
+      display: inline-flex;
+      animation: ticker 20s linear infinite;
+    }
+
+    .ticker span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 3px;
+      padding: 0 32px;
+      color: #fff;
+    }
+
+    .section {
+      padding: 80px 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1;
+      margin-bottom: 48px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+    }
+
+    .feature {
+      background: var(--grey);
+      padding: 32px 28px;
+      border-left: 3px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .feature:hover {
+      border-color: var(--red);
+      background: var(--grey2);
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .feature-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 15px;
+      color: #999;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .forwho {
+      background: var(--grey);
+      padding: 80px 24px;
+    }
+
+    .forwho-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .checks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .check-item::before {
+      content: '▶';
+      color: var(--red);
+      font-size: 12px;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--grey2), transparent);
+      margin: 0 24px;
+    }
+
+    .cta-bottom {
+      padding: 80px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-bottom::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(232,0,13,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-bottom .hero-title {
+      font-size: clamp(40px, 8vw, 80px);
+    }
+
+    footer {
+      background: #000;
+      padding: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: #444;
+      letter-spacing: 1px;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 80px 20px 48px; }
+      .cta-btn { padding: 16px 36px; font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge">100% Gratuito · Sem Compromisso</div>
+    <h1 class="hero-title">
+      MAX TRADER
+      <span>OTC</span>
+    </h1>
+    <p class="hero-sub">Entra no grupo gratuito e vê resultados reais de trading OTC em tempo real. Sem filtros, sem promessas falsas.</p>
+
+    <div class="members-badge">
+      <span class="dot"></span>
+      256 membros ativos no grupo
+    </div>
+
+    <a class="cta-btn" href="https://t.me/+JkCxhjh5T1A5ZmVk" onclick="fbq('track', 'Lead');">
+      ENTRAR NO GRUPO GRÁTIS
+    </a>
+    <p class="guarantee">✓ Acesso imediato &nbsp;·&nbsp; Totalmente gratuito</p>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span>RESULTADOS EM TEMPO REAL</span>
+      <span>·</span>
+      <span>OPÇÕES BINÁRIAS OTC</span>
+      <span>·</span>
+      <span>MÉTODO M1</span>
+      <span>·</span>
+      <span>POCKET OPTION</span>
+      <span>·</span>
+      <span>PRICE ACTION</span>
+      <span>·</span>
+      <span>GRUPO GRATUITO</span>
+      <span>·</span>
+      <span>RESULTADOS EM TEMPO REAL</span>
+      <span>·</span>
+      <span>OPÇÕES BINÁRIAS OTC</span>
+      <span>·</span>
+      <span>MÉTODO M1</span>
+      <span>·</span>
+      <span>POCKET OPTION</span>
+      <span>·</span>
+      <span>PRICE ACTION</span>
+      <span>·</span>
+      <span>GRUPO GRATUITO</span>
+      <span>·</span>
+    </div>
+  </div>
+
+  <!-- O QUE ENCONTRAS NO GRUPO -->
+  <section class="section">
+    <p class="section-label">O que tens acesso</p>
+    <h2 class="section-title">O QUE ENCONTRAS<br>NO GRUPO</h2>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Resultados Reais</div>
+        <div class="feature-desc">Vê os resultados das operações em tempo real, sem edições nem filtros.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">Análises OTC M1</div>
+        <div class="feature-desc">Análises diárias do mercado OTC no timeframe de 1 minuto com a Pocket Option.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📚</div>
+        <div class="feature-title">Conteúdo Educativo</div>
+        <div class="feature-desc">Dicas, estratégias e conceitos de trading partilhados regularmente.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">👥</div>
+        <div class="feature-title">Comunidade Ativa</div>
+        <div class="feature-desc">Mais de 256 traders a aprender e a crescer juntos no mesmo espaço.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">Gestão de Risco</div>
+        <div class="feature-desc">Aprende como proteger o teu capital com regras simples e eficazes.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💰</div>
+        <div class="feature-title">Totalmente Gratuito</div>
+        <div class="feature-desc">Sem custos, sem cartão de crédito. Entra e vê por ti próprio.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PARA QUEM É -->
+  <div class="forwho">
+    <div class="forwho-inner">
+      <p class="section-label">Para quem é</p>
+      <h2 class="section-title">ENTRA SE...</h2>
+      <div class="checks">
+        <div class="check-item">Tens curiosidade sobre opções binárias OTC mas não sabes por onde começar</div>
+        <div class="check-item">Queres ver resultados reais antes de investires em qualquer coisa</div>
+        <div class="check-item">Procuras uma comunidade séria de traders portugueses</div>
+        <div class="check-item">Queres aprender a operar com método e sem emoções</div>
+        <div class="check-item">Estás cansado de perder dinheiro sem perceber porquê</div>
+        <div class="check-item">Queres evoluir como trader de forma consistente</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA BOTTOM -->
+  <section class="cta-bottom">
+    <p class="section-label">Acesso gratuito e imediato</p>
+    <h2 class="hero-title">PRONTO PARA<br><span>ENTRAR?</span></h2>
+    <br><br>
+    <a class="cta-btn" href="https://t.me/+JkCxhjh5T1A5ZmVk" onclick="fbq('track', 'Lead');">
+      ENTRAR NO GRUPO GRÁTIS
+    </a>
+    <p class="guarantee" style="margin-top:20px;">✓ 256 membros · Totalmente gratuito</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 Max Trader · Todos os direitos reservados<br>
+    <span style="color:#333">O trading envolve risco. Os resultados passados não garantem resultados futuros.</span>
+  </footer>
+
+</body>
+</html>
